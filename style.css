@@ -1,0 +1,215 @@
+/* style.css */
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Base styles */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background 0.3s ease;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark theme (default) */
+body.dark-theme {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+  color: #ffffff;
+}
+
+body.dark-theme .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .text-slate-400 {
+  color: #94a3b8;
+}
+
+/* Light theme */
+body.light-theme {
+  background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0);
+  color: #1e293b;
+}
+
+body.light-theme .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .bg-black\/30 {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-theme .bg-black\/20 {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-theme .timer-display,
+body.light-theme .lap-list,
+body.light-theme #lapStats {
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .text-slate-400 {
+  color: #475569;
+}
+
+body.light-theme .input-field {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Custom scrollbar */
+.lap-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lap-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.lap-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* Flash animation */
+@keyframes flash-bg {
+  0%, 50%, 100% { background-color: rgba(0,0,0,0.3); }
+  25%, 75% { background-color: rgba(239, 68, 68, 0.7); }
+}
+
+.flash {
+  animation: flash-bg 0.6s ease 3;
+}
+
+/* Timer display */
+.timer-display {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 4rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .timer-display {
+    font-size: 5rem;
+  }
+}
+
+/* Icon buttons */
+.icon-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon-button img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+body.light-theme .icon-button img {
+  filter: invert(0);
+}
+
+/* Control buttons */
+.control-btn {
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  color: white;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  max-width: 100px;
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+.control-btn:focus {
+  outline: none;
+  kerning: 2px;
+}
+
+/* Action buttons */
+.action-btn {
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  color: white;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  max-width: 140px;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Input fields */
+.input-field {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  font-family: monospace;
+  font-size: 1.25rem;
+}
+
+.input-field:focus {
+  outline: none;
+  kerning: 2px solid #818cf8;
+}
+
+/* Hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Preset buttons */
+.preset-btn {
+  background-color: rgba(79, 70, 229, 0.3);
+  color: inherit;
+}
+
+.preset-btn:hover {
+  background-color: rgba(79, 70, 229, 0.5);
+}
+
+/* Icon colors in light theme */
+body.light-theme .icon-button img {
+  filter: brightness(0.2);
+}

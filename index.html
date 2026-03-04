@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch+ | Professional Timer PWA</title>
+  
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Favicon (SVG) -->
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="Professional stopwatch with laps, countdown timer, and offline support">
+  
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 dark-theme">
+  <div class="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-8 w-full max-w-md border border-white/20">
+    <!-- Mode Toggle -->
+    <div class="flex rounded-xl bg-black/30 p-1 mb-6">
+      <button id="modeStopwatch" class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none">Stopwatch</button>
+      <button id="modeTimer" class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none">Timer</button>
+    </div>
+
+    <!-- Title with mute and theme toggles (SVG icons) -->
+    <div class="flex items-center justify-center gap-2 mb-6">
+      <h1 id="modeTitle" class="text-3xl font-light tracking-wider">STOPWATCH</h1>
+      
+      <!-- Theme toggle -->
+      <button id="themeToggle" class="icon-button" title="Toggle theme">
+        <img src="icons/moon.svg" id="moonIcon" class="theme-icon" alt="Dark theme" width="20" height="20">
+        <img src="icons/sun.svg" id="sunIcon" class="theme-icon hidden" alt="Light theme" width="20" height="20">
+      </button>
+
+      <!-- Mute toggle -->
+      <button id="muteToggle" class="icon-button" title="Toggle sound">
+        <img src="icons/mute-on.svg" id="speakerOnIcon" class="mute-icon" alt="Sound on" width="20" height="20">
+        <img src="icons/mute-off.svg" id="speakerOffIcon" class="mute-icon hidden" alt="Sound off" width="20" height="20">
+      </button>
+    </div>
+
+    <!-- Timer Display -->
+    <div id="timerDisplay" class="timer-display bg-black/30 rounded-2xl py-8 px-4 mb-4 shadow-inner border border-white/10">
+      00:00
+    </div>
+
+    <!-- Timer Inputs + Presets (hidden in stopwatch mode) -->
+    <div id="timerInputs" class="hidden mb-4">
+      <div class="flex gap-2 items-center justify-center mb-3">
+        <input type="number" id="minutesInput" min="0" max="59" value="1" class="input-field w-20">
+        <span class="text-xl">:</span>
+        <input type="number" id="secondsInput" min="0" max="59" value="0" class="input-field w-20">
+        <button id="setTimerBtn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">Set</button>
+      </div>
+      
+      <!-- Preset buttons -->
+      <div class="flex gap-2 justify-center flex-wrap">
+        <button class="preset-btn bg-indigo-500/30 hover:bg-indigo-500/50 px-3 py-1 rounded-lg text-sm transition-all" data-minutes="1">1 min</button>
+        <button class="preset-btn bg-indigo-500/30 hover:bg-indigo-500/50 px-3 py-1 rounded-lg text-sm transition-all" data-minutes="5">5 min</button>
+        <button class="preset-btn bg-indigo-500/30 hover:bg-indigo-500/50 px-3 py-1 rounded-lg text-sm transition-all" data-minutes="10">10 min</button>
+        <button class="preset-btn bg-indigo-500/30 hover:bg-indigo-500/50 px-3 py-1 rounded-lg text-sm transition-all" data-minutes="15">15 min</button>
+        <button class="preset-btn bg-indigo-500/30 hover:bg-indigo-500/50 px-3 py-1 rounded-lg text-sm transition-all" data-minutes="30">30 min</button>
+      </div>
+    </div>
+
+    <!-- Main control buttons -->
+    <div class="flex gap-3 justify-center mb-3">
+      <button id="startBtn" class="control-btn bg-emerald-500 hover:bg-emerald-600">Start</button>
+      <button id="stopBtn" class="control-btn bg-amber-500 hover:bg-amber-600">Stop</button>
+      <button id="resetBtn" class="control-btn bg-rose-500 hover:bg-rose-600">Reset</button>
+    </div>
+
+    <!-- Lap button + Export button (hidden in timer mode) -->
+    <div id="lapBtnContainer" class="flex gap-3 justify-center mb-6">
+      <button id="lapBtn" class="action-btn bg-indigo-500 hover:bg-indigo-600">＋ Lap</button>
+      <button id="exportBtn" class="action-btn bg-purple-500 hover:bg-purple-600 flex items-center justify-center gap-1">
+        <img src="icons/download.svg" alt="Export" width="16" height="16">
+        CSV
+      </button>
+    </div>
+
+    <!-- Lap statistics & list (hidden in timer mode) -->
+    <div id="lapSection">
+      <div id="lapStats" class="flex justify-between text-sm bg-black/20 rounded-xl p-3 mb-3 border border-white/10">
+        <span>Best: <span id="bestLapDisplay">—</span></span>
+        <span>Avg: <span id="avgLapDisplay">—</span></span>
+      </div>
+      <div class="bg-black/30 rounded-xl p-3 border border-white/10 max-h-48 overflow-y-auto lap-list">
+        <div id="lapList" class="space-y-1 font-mono text-sm">
+          <div class="text-center text-slate-400 italic py-2">No laps recorded</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Install button (appears when PWA can be installed) -->
+    <div id="installContainer" class="mt-4 text-center hidden">
+      <button id="installBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition-all shadow-lg">
+        📲 Install App
+      </button>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+  
+  <!-- Register Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => console.log('ServiceWorker registered'))
+          .catch(err => console.log('ServiceWorker registration failed: ', err));
+      });
+    }
+  </script>
+</body>
+</html>
