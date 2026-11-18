@@ -1,25 +1,25 @@
-# Stopwatch+ - Professional PWA Timer
+# Stopwatch+
 
-A feature-rich stopwatch and timer Progressive Web App (PWA) with offline support.
+A stopwatch and countdown timer for the browser. It installs as a PWA and keeps working offline.
 
-## Features
+Live demo: https://stopwatch-v1.vercel.app
 
-- ⏱️ **Stopwatch** with lap timing
-- ⏲️ **Countdown Timer** with presets (1, 5, 10, 15, 30 minutes)
-- 📊 **Lap tracking** : best lap highlighting, average calculation
-- 💾 **Persistent storage** : saves laps and timer presets
-- 🔇 **Mute toggle** : silent mode for alerts
-- 🌓 **Dark/Light theme** - with persistent preference
-- 📥 **Export laps** as CSV for data analysis
-- 📱 **PWA ready** : install on any device, works offline
-- 🎨 **Custom SVG icons** : crisp on all displays
+## What it does
 
-## Installation
+- Stopwatch with laps. It marks your best lap and works out the average.
+- Countdown timer with presets for 1, 5, 10, 15 and 30 minutes.
+- Laps and presets are saved in the browser, so a refresh doesn't wipe them.
+- Export your laps as a CSV file.
+- Mute button for the alert sound.
+- Light and dark theme, and it remembers the one you picked.
+- Custom SVG icons that stay sharp on any screen.
 
-### Web Version
-Visit the deployed URL or run locally:
+## Run it locally
 
 ```bash
-git clone <https://github.com/Aisha-Aliyu/productivity-time-tracker.git>
-
+git clone https://github.com/Aisha-Aliyu/Productivity-Time-Tracker.git
+cd Productivity-Time-Tracker
 npx serve
+```
+
+Then open the address that `serve` prints in your terminal.
